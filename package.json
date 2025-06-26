@@ -1,0 +1,40 @@
+{
+  "name": "project-headliner-backend-2025",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "lint": "eslint src/**/*.js",
+    "start": "node ./src/index.js",
+    "dev": "nodemon src/index.js",
+    "build": "npm run build-docs",
+    "build-docs": "redocly bundle docs/openapi.yaml --ext json -o docs/swagger.json",
+    "preview-docs": "redocly preview-docs"
+  },
+  "keywords": [],
+  "author": "Kateryna Bilychuk <bilychukkateryna@ukr.net>",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.29.0",
+    "@redocly/cli": "^1.34.3",
+    "eslint": "^9.29.0",
+    "globals": "^16.2.0",
+    "nodemon": "^3.1.10",
+    "pino-pretty": "^13.0.0"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cloudinary": "^2.7.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "http-errors": "^2.0.0",
+    "joi": "^17.13.3",
+    "mongoose": "^8.16.0",
+    "multer": "^2.0.1",
+    "pino-http": "^10.5.0",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
