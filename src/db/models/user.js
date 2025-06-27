@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import { emailPattern } from '../../constants/index.js';
+import { EMAIL_PATTERN } from '../../constants/index.js';
 
 const userSchema = new Schema(
   {
@@ -11,7 +11,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      match: [emailPattern, 'Please use a valid email address'],
+      match: [EMAIL_PATTERN, 'Please use a valid email address'],
     },
     password: {
       type: String,
@@ -30,6 +30,6 @@ userSchema.methods.toJSON = function () {
   return obj;
 };
 
-const User = model('user', userSchema);
+const UsersCollection = model('users', userSchema);
 
-export default User;
+export default UsersCollection;
