@@ -9,7 +9,7 @@ export const initMongoConnection = async () => {
     const db = getEnvVar('MONGODB_DB');
 
     await mongoose.connect(
-      `mongodb+srv://${user}:${pwd}@${url}/${db}?retryWrites=true&w=majority&appName=Tasteorama`,
+      `mongodb+srv://bilychukkateryna:F02iyAWNeBYvolvk@tasteorama.2dcc1tk.mongodb.net/tasteorama?retryWrites=true&w=majority&appName=Tasteorama`,
     );
     console.log('Mongo connection successfully established!');
   } catch (e) {
