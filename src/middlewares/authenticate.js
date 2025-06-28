@@ -1,46 +1,46 @@
-import createHttpError from 'http-errors';
+import createHttpError from "http-errors";
 
-import  Session  from '../db/models/session.js';
-import  UsersCollection  from '../db/models/user.js';
+import { Session } from "../db/models/session.js";
+import { UsersCollection } from "../db/models/user.js";
 
 export const authenticate = async (req, res, next) => {
-  const authHeader = req.get('Authorization');
+    const authHeader = req.get('Authorization');
 
-  if (!authHeader) {
-    next(createHttpError(401, 'Please provide Authorization header'));
-    return;
-  }
+    if (!authHeader) {
+        next(createHttpError(401, 'Please provide Authorization header'));
+        return;
+    }
 
-  const [bearer, token] = authHeader.split(' ');
+    const [bearer, token] = authHeader.split(' ');
 
-  if (bearer !== 'Bearer' || !token) {
+if (bearer !== 'Bearer' || !token) {
     next(createHttpError(401, 'Auth header should be of type Bearer'));
     return;
-  }
+}
 
-  const session = await Session.findOne({ accessToken: token });
+    const session = await Session.findOne({ accessToken: token });
 
-  if (!session) {
+    if (!session) {
     next(createHttpError(401, 'Session not found'));
     return;
-  }
+    }
 
-  const isAccessTokenExpired =
+    const isAccessTokenExpired =
     new Date() > new Date(session.accessTokenValidUntil);
 
-  if (isAccessTokenExpired) {
+    if (isAccessTokenExpired) {
     next(createHttpError(401, 'Access token expired'));
     return;
-  }
+    }
 
-  const user = await UsersCollection.findById(session.userId);
+    const user = await UsersCollection.findById(session.userId);
 
-  if (!user) {
+    if (!user) {
     next(createHttpError(401));
     return;
-  }
+    }
 
-  req.user = user;
+    req.user = user;
 
-  next();
+    next();
 };

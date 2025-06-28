@@ -3,13 +3,10 @@ import { getCurrentUserController } from '../controllers/users.js';
 import { authenticate } from '../middlewares/authenticate.js';
 
 
-
 const router = express.Router();
 
-router.get('/current', authenticate, getCurrentUserController);
+router.use(authenticate);
 
-
-
+router.get('/current', getCurrentUserController);
 
 export default router;
-
