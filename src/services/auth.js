@@ -5,6 +5,23 @@ import { FIFTEEN_MINUTES, THIRTY_DAYS } from '../constants/index.js';
 import UsersCollection from '../db/models/user.js';
 import Session from '../db/models/session.js';
 
+export const registerUser = async (payload) => {
+  const existingUser = await UsersCollection.findOne({ email: payload.email });
+
+  if (existingUser) {
+    throw createHttpError(409, 'Email in use');
+  }
+
+  const hashedPassword = await bcrypt.hash(payload.password, 10);
+
+  const user = await UsersCollection.create({
+    ...payload,
+    password: hashedPassword,
+  });
+
+  return user;
+};
+
 export const loginUser = async (payload) => {
   const user = await UsersCollection.findOne({ email: payload.email });
   if (!user) {
