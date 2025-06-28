@@ -6,5 +6,7 @@ const router = express.Router();
 
 router.get('/current', authenticate, getCurrentUser);
 
+
+
 export default router;
 
