@@ -46,6 +46,6 @@ export const loginUser = async (payload) => {
 };
 
 
-export const logoutUser = async (sessionId) => {
-    await Session.deleteOne({ _id: sessionId });
+export const logoutUser = async ({ sessionId, refreshToken }) => {
+    await Session.deleteOne({ _id: sessionId, refreshToken });
   };

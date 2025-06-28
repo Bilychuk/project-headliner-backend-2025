@@ -35,15 +35,14 @@ export const loginUserController = async (req, res) => {
 
 export const logoutUserController = async (req, res) => {
     if (req.cookies.sessionId) {
-      await logoutUser(req.cookies.sessionId);
+      await logoutUser({
+        sessionId: req.cookies.sessionId,
+        refreshToken: req.cookies.refreshToken
+      });
     }
 
     res.clearCookie('sessionId');
     res.clearCookie('refreshToken');
 
   res.status(204).send();
-  //  res.json({
-  //   status: 204,
-  //   message: 'Пользователь успешно вышел из системы!',
-  // });
-  };
+    };
