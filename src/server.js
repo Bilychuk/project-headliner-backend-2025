@@ -9,6 +9,7 @@ import { UPLOAD_DIR } from './constants/index.js';
 import { swaggerDocs } from './middlewares/swaggerDocs.js';
 import router from './routers/index.js';
 
+
 const PORT = Number(getEnvVar('PORT', '5000'));
 
 export const setupServer = () => {
@@ -26,9 +27,12 @@ export const setupServer = () => {
     }),
   );
 
+ 
   app.use('/uploads', express.static(UPLOAD_DIR));
   app.use('/api-docs', swaggerDocs());
   app.use('/api', router);
+  // app.use("/api", authRouter);
+  
 
   app.use(notFoundHandler);
 
