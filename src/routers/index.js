@@ -2,8 +2,8 @@ import { Router } from 'express';
 import authRouter from './auth.js';
 import categoriesRouter from './categories.js';
 import ingredientsRouter from './ingredients.js';
-import usersRouter from './users.js';
 import recipesRouter from './recipes.js';
+import usersRouter from './users.js';
 import { authenticate } from '../middlewares/authenticate.js';
 
 const router = Router();

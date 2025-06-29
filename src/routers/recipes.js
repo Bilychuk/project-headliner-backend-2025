@@ -2,12 +2,13 @@ import express from 'express';
 import {
   createRecipeController,
   getRecipesController,
+  getRecipeByIdController,
 } from '../controllers/recipes.js';
 import { createRecipeSchema } from '../validation/recipes.js';
 
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { upload } from '../middlewares/multer.js';
-//import { isValidId } from '../middlewares/isValidId.js';
+import { isValidId } from '../middlewares/isValidId.js';
 import { validateBody } from '../middlewares/validateBody.js';
 
 const router = express.Router();
@@ -21,5 +22,6 @@ router.post(
   validateBody(createRecipeSchema),
   ctrlWrapper(createRecipeController),
 );
+router.get('/:recipeId', isValidId, ctrlWrapper(getRecipeByIdController));
 
 export default router;

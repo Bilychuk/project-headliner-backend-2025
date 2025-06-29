@@ -1,5 +1,9 @@
 import createHttpError from 'http-errors';
-import { createRecipe, getAllMyRecipes } from '../services/recipes.js';
+import {
+  createRecipe,
+  getAllMyRecipes,
+  getRecipeById,
+} from '../services/recipes.js';
 
 import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
@@ -53,5 +57,22 @@ export const createRecipeController = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+// ==/==/==/==/==/==/==/==/==/==/==/==/==
+
+// ==/==/==/==/==/ GET BY ID /==/==/==/==/==
+export const getRecipeByIdController = async (req, res, next) => {
+  const { recipeId } = req.params;
+  const recipe = await getRecipeById(recipeId);
+
+  if (!recipe) {
+    throw createHttpError(404, 'Recipe not found');
+  }
+
+  res.status(200).json({
+    status: 200,
+    message: `Successfully found recipe with id ${recipeId}!`,
+    data: recipe,
+  });
 };
 // ==/==/==/==/==/==/==/==/==/==/==/==/==
