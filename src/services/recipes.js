@@ -16,8 +16,8 @@ export const getAllRecipes = async ({ page, perPage, filter = {} }) => {
 
   const baseFilter = { ...filter };
 
-  if (baseFilter.ingredients && typeof baseFilter.ingredients === 'string') {
-    const ingredientName = baseFilter.ingredients;
+  if (baseFilter.ingredient && typeof baseFilter.ingredient === 'string') {
+    const ingredientName = baseFilter.ingredient.trim();
 
     const foundIngredient = await IngredientCollection.findOne({
       name: ingredientName,
