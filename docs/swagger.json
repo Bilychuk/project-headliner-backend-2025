@@ -1,0 +1,275 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Headliner API",
+    "version": "1.0.0",
+    "description": "API для авторизації, користувачів, категорій та інгредієнтів"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/api",
+      "description": "Local development server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Авторизація користувачів"
+    },
+    {
+      "name": "Users",
+      "description": "Дані про користувача"
+    },
+    {
+      "name": "Categories",
+      "description": "Категорії рецептів"
+    },
+    {
+      "name": "Ingredients",
+      "description": "Інгредієнти рецептів"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Реєстрація користувача",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["name", "email", "password"],
+                "properties": {
+                  "name": { "type": "string", "example": "Serhii" },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "serhii@example.com"
+                  },
+                  "password": { "type": "string", "example": "Qwerty123!" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Успішна реєстрація",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": 201,
+                  "message": "Successfully registered a user!",
+                  "data": {
+                    "_id": "68603a4baa66f1fd3cc06f59",
+                    "name": "Serhii",
+                    "email": "serhii@example.com",
+                    "createdAt": "2025-06-28T18:54:03.939Z",
+                    "updatedAt": "2025-06-28T18:54:03.939Z"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Помилка валідації",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": 400,
+                  "message": "Email is required"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Логін користувача",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "serhii@example.com"
+                  },
+                  "password": { "type": "string", "example": "Qwerty123!" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успішний логін",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": 200,
+                  "message": "Successfully logged in an user!",
+                  "data": {
+                    "accessToken": "accessTokenString"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Невірні облікові дані",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": 401,
+                  "message": "Invalid email or password"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Вихід користувача",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "204": {
+            "description": "Успішний вихід без відповіді"
+          },
+          "401": {
+            "description": "Невалідний або прострочений токен",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": 401,
+                  "message": "Access token expired"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/current": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Поточний користувач",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Дані поточного користувача",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": 200,
+                  "message": "Successfully found user",
+                  "data": {
+                    "user": {
+                      "_id": "68603a4baa66f1fd3cc06f59",
+                      "name": "Serhii",
+                      "email": "serhii@example.com",
+                      "createdAt": "2025-06-28T18:54:03.939Z",
+                      "updatedAt": "2025-06-28T18:54:03.939Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Access token expired або невірний",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": 401,
+                  "message": "UnauthorizedError",
+                  "data": {
+                    "message": "Access token expired"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categories": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "Отримати список категорій",
+        "responses": {
+          "200": {
+            "description": "Успішно отримано список категорій",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": 200,
+                  "message": "Successfully found categories",
+                  "data": [
+                    {
+                      "_id": "665c611b89123b001c5c1234",
+                      "name": "Seafood"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Помилка сервера"
+          }
+        }
+      }
+    },
+    "/ingredients": {
+      "get": {
+        "tags": ["Ingredients"],
+        "summary": "Отримати список інгредієнтів",
+        "responses": {
+          "200": {
+            "description": "Успішно отримано список інгредієнтів",
+            "content": {
+              "application/json": {
+                "example": {
+                  "status": 200,
+                  "message": "Successfully found ingredients",
+                  "data": [
+                    {
+                      "_id": "665c61ff89123b001c5c5678",
+                      "name": "Egg",
+                      "desc": "A chicken egg",
+                      "img": "http://example.com/egg.jpg"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Помилка сервера"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
