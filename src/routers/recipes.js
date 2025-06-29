@@ -1,5 +1,8 @@
 import express from 'express';
-import { createRecipeController } from '../controllers/recipes.js';
+import {
+  createRecipeController,
+  getRecipesController,
+} from '../controllers/recipes.js';
 import { createRecipeSchema } from '../validation/recipes.js';
 
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
@@ -10,6 +13,7 @@ import { validateBody } from '../middlewares/validateBody.js';
 const router = express.Router();
 const jsonParser = express.json();
 
+router.get('/', ctrlWrapper(getRecipesController));
 router.post(
   '/',
   jsonParser,

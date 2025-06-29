@@ -1,12 +1,30 @@
 import createHttpError from 'http-errors';
-import { createRecipe } from '../services/recipes.js';
+import { createRecipe, getAllMyRecipes } from '../services/recipes.js';
 
 import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
 import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 
-// import { parsePaginationParams } from '../utils/parsePaginationParams.js';
+import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 // import { parseSortParams } from '../utils/parseSortParams.js';
 // import { parseFilterParams } from '../utils/parseFilterParams.js';
+
+// ==/==/==/==/==/ GET ALL MY /==/==/==/==/==
+export const getRecipesController = async (req, res, next) => {
+  const { page, perPage } = parsePaginationParams(req.query);
+
+  const contacts = await getAllMyRecipes({
+    page,
+    perPage,
+    owner: req.user.id,
+  });
+
+  res.json({
+    status: 200,
+    message: 'Successfully found recipes!',
+    data: contacts,
+  });
+};
+// ==/==/==/==/==/==/==/==/==/==/==/==/==
 
 // ==/==/==/==/==/ CREATE /==/==/==/==/==
 export const createRecipeController = async (req, res, next) => {
