@@ -1,10 +1,27 @@
-import { Router } from 'express';
-import { isValidId } from '../middlewares/isValidId.js';
+import express from 'express';
+import {
+  createRecipeController,
+  getRecipesController,
+  getRecipeByIdController,
+} from '../controllers/recipes.js';
+import { createRecipeSchema } from '../validation/recipes.js';
+
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import { getRecipeByIdController } from '../controllers/recipes.js';
+import { upload } from '../middlewares/multer.js';
+import { isValidId } from '../middlewares/isValidId.js';
+import { validateBody } from '../middlewares/validateBody.js';
 
-const router = Router();
+const router = express.Router();
+const jsonParser = express.json();
 
+router.get('/', ctrlWrapper(getRecipesController));
+router.post(
+  '/',
+  jsonParser,
+  upload.single('thumb'),
+  validateBody(createRecipeSchema),
+  ctrlWrapper(createRecipeController),
+);
 router.get('/:recipeId', isValidId, ctrlWrapper(getRecipeByIdController));
 
 export default router;
