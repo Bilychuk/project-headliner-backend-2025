@@ -4,7 +4,12 @@ import {
   addFavoriteRecipesController,
   delFavoriteRecipesController,
 } from '../controllers/recipes.js';
+
+import { authenticate } from '../middlewares/authenticate.js';
+
 const router = express.Router();
+
+router.use(authenticate);
 
 router.post('/:recipeId', ctrlWrapper(addFavoriteRecipesController));
 
