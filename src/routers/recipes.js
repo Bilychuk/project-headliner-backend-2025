@@ -1,13 +1,10 @@
-import { Router } from 'express';
-
+import express from 'express';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-
 import {
   addFavoriteRecipesController,
   delFavoriteRecipesController,
 } from '../controllers/recipes.js';
-
-const router = Router();
+const router = express.Router();
 
 router.post('/:recipeId', ctrlWrapper(addFavoriteRecipesController));
 
