@@ -1,16 +1,28 @@
-tags:
-  - Auth
-summary: User registration
-requestBody:
-  required: true
-  content:
-    multipart/form-data:
-      schema:
-        $ref: '../../components/schemas/schemas.yaml#/RegisterRequest'
-
-responses:
-  201:
-    $ref: '../../components/responses/RegisterSuccessResponse.yaml'
-
-  400:
-    $ref: '../../components/responses/ValidationErrorResponse.yaml'
+  tags:
+    - Auth
+  operationId: registerUser
+  description: Register a new user with name, email, and password.
+  security: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/schemas/schemas.yaml#/RegisterRequest'
+  responses:
+    201:
+      description: User registered successfully
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/schemas.yaml#/RegisterSuccessResponse'
+    400:
+      $ref: '../../components/responses/ValidationErrorResponse.yaml'
+    409:
+      description: Email in use
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/schemas/schemas.yaml#/ConflictErrorResponse'
+    500:
+      $ref: '../../components/responses/ServerErrorResponse.yaml'

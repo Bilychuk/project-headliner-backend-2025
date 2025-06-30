@@ -11,7 +11,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:5000/api"
+      "url": "https://tasteorama.onrender.com/api"
     }
   ],
   "tags": [
@@ -38,11 +38,13 @@
         "tags": [
           "Auth"
         ],
-        "summary": "User registration",
+        "operationId": "registerUser",
+        "description": "Register a new user with name, email, and password.",
+        "security": [],
         "requestBody": {
           "required": true,
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/RegisterRequest"
               }
@@ -51,10 +53,30 @@
         },
         "responses": {
           "201": {
-            "$ref": "#/components/responses/RegisterSuccessResponse"
+            "description": "User registered successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterSuccessResponse"
+                }
+              }
+            }
           },
           "400": {
             "$ref": "#/components/responses/ValidationErrorResponse"
+          },
+          "409": {
+            "description": "Email in use",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConflictErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerErrorResponse"
           }
         }
       }
@@ -184,6 +206,12 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
     "schemas": {
       "LoginRequest": {
         "type": "object",
@@ -274,21 +302,33 @@
         "required": [
           "name",
           "email",
-          "password"
+          "password",
+          "confirmPassword"
         ],
         "properties": {
           "name": {
             "type": "string",
-            "example": "Serhii"
+            "example": "Kateryna",
+            "description": "User's full name"
           },
           "email": {
             "type": "string",
             "format": "email",
-            "example": "serhii@example.com"
+            "example": "kateryna@example.com",
+            "description": "User's email address"
           },
           "password": {
             "type": "string",
-            "example": "Qwerty123!"
+            "format": "password",
+            "minLength": 6,
+            "example": "password123",
+            "description": "User's password"
+          },
+          "confirmPassword": {
+            "type": "string",
+            "format": "password",
+            "example": "password123",
+            "description": "Confirmation of the password"
           }
         }
       },
@@ -403,6 +443,34 @@
           }
         }
       },
+      "ConflictErrorResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 409,
+            "description": "HTTP status code"
+          },
+          "message": {
+            "type": "string",
+            "example": "Email in use",
+            "description": "Error message"
+          }
+        }
+      },
+      "ServerErrorResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "error"
+          },
+          "message": {
+            "type": "string",
+            "example": "Internal server error"
+          }
+        }
+      },
       "CurrentUserResponse": {
         "type": "object",
         "properties": {
@@ -479,19 +547,6 @@
           }
         }
       },
-      "ServerErrorResponse": {
-        "type": "object",
-        "properties": {
-          "status": {
-            "type": "string",
-            "example": "error"
-          },
-          "message": {
-            "type": "string",
-            "example": "Internal server error"
-          }
-        }
-      },
       "IngredientsResponse": {
         "type": "object",
         "properties": {
@@ -532,22 +587,22 @@
       }
     },
     "responses": {
-      "RegisterSuccessResponse": {
-        "description": "Successful registration",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/RegisterSuccessResponse"
-            }
-          }
-        }
-      },
       "ValidationErrorResponse": {
         "description": "Validation error",
         "content": {
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/ValidationErrorResponse"
+            }
+          }
+        }
+      },
+      "ServerErrorResponse": {
+        "description": "Server error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ServerErrorResponse"
             }
           }
         }
@@ -568,16 +623,6 @@
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/NotFoundErrorResponse"
-            }
-          }
-        }
-      },
-      "ServerErrorResponse": {
-        "description": "Server error",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/ServerErrorResponse"
             }
           }
         }

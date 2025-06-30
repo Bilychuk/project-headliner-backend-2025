@@ -4,17 +4,29 @@ RegisterRequest:
     - name
     - email
     - password
+    - confirmPassword
   properties:
     name:
       type: string
-      example: Serhii
+      example: "Kateryna"
+      description: User's full name
     email:
       type: string
       format: email
-      example: serhii@example.com
+      example: "kateryna@example.com"
+      description: User's email address
     password:
       type: string
-      example: Qwerty123!
+      format: password
+      minLength: 6
+      example: "password123"
+      description: User's password
+    confirmPassword:
+      type: string
+      format: password
+      example: "password123"
+      description: Confirmation of the password
+
 
 LoginRequest:
   type: object
@@ -250,3 +262,15 @@ ValidationErrorResponse:
                   key:
                     type: string
                     example: name
+
+ConflictErrorResponse:
+  type: object
+  properties:
+    status:
+      type: integer
+      example: 409
+      description: HTTP status code
+    message:
+      type: string
+      example: "Email in use"
+      description: Error message

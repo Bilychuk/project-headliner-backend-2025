@@ -8,8 +8,8 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
 
 servers:
-  - url: http://localhost:5000/api
-
+  - url: https://tasteorama.onrender.com/api
+  
 tags:
   - name: Auth
     description: User authentication
@@ -32,7 +32,7 @@ paths:
       $ref: '../swagger/paths/auth/logout.yaml'
   /users/current:
     get:
-      $ref: "../swagger/paths/users/current.yaml"
+      $ref: '../swagger/paths/users/current.yaml'
   /categories:
     get:
       $ref: '../swagger/paths/categories/getCategories.yaml'
@@ -41,6 +41,11 @@ paths:
       $ref: '../swagger/paths/ingredients/getIngredients.yaml'
 
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+
   schemas:
     LoginRequest:
       $ref: '../swagger/components/schemas/schemas.yaml#/LoginRequest'
@@ -50,4 +55,3 @@ components:
       $ref: '../swagger/components/schemas/schemas.yaml#/UnauthorizedErrorResponse'
     NotFoundErrorResponse:
       $ref: '../swagger/components/schemas/schemas.yaml#/NotFoundErrorResponse'
-
