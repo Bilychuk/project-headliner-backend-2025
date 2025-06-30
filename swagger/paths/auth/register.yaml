@@ -1,0 +1,16 @@
+tags:
+  - Auth
+summary: User registration
+requestBody:
+  required: true
+  content:
+    multipart/form-data:
+      schema:
+        $ref: '../../components/schemas/schemas.yaml#/RegisterRequest'
+
+responses:
+  201:
+    $ref: '../../components/responses/RegisterSuccessResponse.yaml'
+
+  400:
+    $ref: '../../components/responses/ValidationErrorResponse.yaml'

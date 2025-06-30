@@ -1,0 +1,13 @@
+tags:
+  - Categories
+summary: Get category list
+responses:
+  200:
+    description: Categories retrieved successfully
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/schemas/schemas.yaml#/CategoriesResponse'
+          
+  500:
+    $ref: '../../components/responses/ServerErrorResponse.yaml'

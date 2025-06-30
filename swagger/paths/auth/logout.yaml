@@ -1,0 +1,9 @@
+tags:
+  - Auth
+summary: User logout
+responses:
+  204:
+    description: Successfully logged out
+
+
+

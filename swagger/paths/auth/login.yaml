@@ -1,0 +1,24 @@
+tags:
+  - Auth
+summary: User login
+requestBody:
+  required: true
+  content:
+    multipart/form-data:
+      schema:
+        $ref: '../../components/schemas/schemas.yaml#/LoginRequest'
+
+responses:
+  200:
+    description: Successful login
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/schemas/schemas.yaml#/LoginResponse'
+
+  401:
+    $ref: '../../components/responses/UnauthorizedErrorResponse.yaml'
+
+  404:
+    $ref: '../../components/responses/NotFoundErrorResponse.yaml'
+

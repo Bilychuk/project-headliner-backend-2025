@@ -1,0 +1,12 @@
+tags:
+  - Ingredients
+summary: Get ingredient list
+responses:
+  200:
+    description: Ingredients retrieved successfully
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/schemas/schemas.yaml#/IngredientsResponse'
+  500:
+    $ref: '../../components/responses/ServerErrorResponse.yaml'

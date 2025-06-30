@@ -1,0 +1,85 @@
+tags:
+  - Recipes
+summary: Get recipe by ID
+parameters:
+  - in: path
+    name: recipeId
+    required: true
+    schema:
+      type: string
+    description: Unique recipe identifier
+responses:
+  200:
+    description: Recipe found successfully
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found recipe with id 12345!
+            data:
+              type: object
+              properties:
+                _id:
+                  type: string
+                  example: "12345"
+                title:
+                  type: string
+                  example: Borscht
+                category:
+                  type: string
+                  example: Soups
+                owner:
+                  type: string
+                  example: userId
+                area:
+                  type: string
+                  example: Ukrainian cuisine
+                instructions:
+                  type: string
+                  example: Boil, add...
+                description:
+                  type: string
+                  example: Traditional Ukrainian borscht
+                thumb:
+                  type: string
+                  example: http://example.com/image.jpg
+                time:
+                  type: string
+                  example: 60 min
+                ingredients:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: object
+                        properties:
+                          _id:
+                            type: string
+                            example: ingredientId
+                          name:
+                            type: string
+                            example: Beetroot
+                      measure:
+                        type: string
+                        example: 200 g
+  404:
+    description: Recipe not found
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 404
+            message:
+              type: string
+              example: Recipe not found
+
