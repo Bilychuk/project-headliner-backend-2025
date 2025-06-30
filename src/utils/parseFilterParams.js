@@ -1,6 +1,7 @@
 export const parseFilterParams = (query) => {
   const { category, ingredient, search } = query;
   const filter = {};
+
   if (category) {
     filter.category = category;
   }

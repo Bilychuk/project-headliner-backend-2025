@@ -23,9 +23,16 @@ export const getAllRecipesController = async (req, res) => {
   const filter = parseFilterParams(req.query);
   const recipes = await getAllRecipes({ page, perPage, filter });
 
+  let message = '';
+  if (recipes.totalItems > 0) {
+    message = 'Successfully found recipes!';
+  } else {
+    message = 'No recipes found matching your criteria.';
+  }
+
   res.status(200).json({
     status: 200,
-    message: 'Successfully found recipes!',
+    message: message,
     data: recipes,
   });
 };

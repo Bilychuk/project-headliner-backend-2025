@@ -13,14 +13,12 @@ export const getRecipeById = async (recipeId) => {
 export const getAllRecipes = async ({ page, perPage, filter = {} }) => {
   const limit = perPage;
   const skip = (page - 1) * perPage;
-
   const baseFilter = { ...filter };
 
   if (baseFilter.ingredient && typeof baseFilter.ingredient === 'string') {
-    const ingredientName = baseFilter.ingredient.trim();
-
+    const ingredientName = baseFilter.ingredient;
     const foundIngredient = await IngredientCollection.findOne({
-      name: ingredientName,
+      name: { $regex: new RegExp(ingredientName.trim(), 'i') },
     })
       .select('_id')
       .exec();
@@ -36,12 +34,10 @@ export const getAllRecipes = async ({ page, perPage, filter = {} }) => {
         hasPreviousPage: false,
       };
     }
-
     const ingredientId = foundIngredient._id;
-
     baseFilter.ingredients = { $elemMatch: { id: ingredientId } };
+    delete baseFilter.ingredient;
   }
-
   const recipesQuery = RecipesCollection.find(baseFilter);
   const recipesCount = await RecipesCollection.countDocuments(baseFilter);
 
@@ -55,10 +51,29 @@ export const getAllRecipes = async ({ page, perPage, filter = {} }) => {
     })
     .exec();
 
-  const paginationData = calculatePaginationData(recipesCount, perPage, page);
+  const transformedRecipes = recipes.map((recipe) => {
+    const recipeObj = recipe.toObject();
 
+    if (recipeObj.ingredients && Array.isArray(recipeObj.ingredients)) {
+      recipeObj.ingredients = recipeObj.ingredients.map((ing) => {
+        if (ing.id && ing.id._id && ing.id.name) {
+          return {
+            _id: ing.id._id,
+            name: ing.id.name,
+            measure: ing.measure,
+            desc: ing.id.desc,
+            img: ing.id.img,
+          };
+        }
+        return ing;
+      });
+    }
+    return recipeObj;
+  });
+
+  const paginationData = calculatePaginationData(recipesCount, perPage, page);
   return {
-    data: recipes,
+    data: transformedRecipes,
     ...paginationData,
   };
 };
