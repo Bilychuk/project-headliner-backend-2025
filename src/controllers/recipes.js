@@ -1,7 +1,7 @@
 import createHttpError from 'http-errors';
 import {
   createRecipe,
-  getAllMyRecipes,
+  getOwnRecipes,
   getRecipeById,
 } from '../services/recipes.js';
 
@@ -13,19 +13,19 @@ import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 // import { parseFilterParams } from '../utils/parseFilterParams.js';
 
 // ==/==/==/==/==/ GET ALL MY /==/==/==/==/==
-export const getRecipesController = async (req, res, next) => {
+export const getOwnRecipesController = async (req, res, next) => {
   const { page, perPage } = parsePaginationParams(req.query);
 
-  const contacts = await getAllMyRecipes({
+  const recipes = await getOwnRecipes({
     page,
     perPage,
-    owner: req.user.id,
+    owner: req.user._id,
   });
 
-  res.json({
+  res.status(200).json({
     status: 200,
-    message: 'Successfully found recipes!',
-    data: contacts,
+    message: 'Successfully found own recipes!',
+    data: recipes,
   });
 };
 // ==/==/==/==/==/==/==/==/==/==/==/==/==

@@ -1,14 +1,14 @@
 import { RecipesCollection } from '../db/models/recipe.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
-export async function getAllMyRecipes({ page = 1, perPage = 10, owner }) {
+export async function getOwnRecipes({ page = 1, perPage = 12, owner }) {
   const skip = page > 0 ? (page - 1) * perPage : 0;
 
   const recipesQuery = RecipesCollection.find({ owner });
 
   const [totalItems, recipes] = await Promise.all([
-    RecipesCollection.countDocuments(recipesQuery),
-    recipesQuery.skip(skip).limit(perPage),
+    RecipesCollection.find().merge(recipesQuery).countDocuments(),
+    recipesQuery.skip(skip).limit(perPage).exec(),
   ]);
 
   const paginationData = calculatePaginationData(totalItems, page, perPage);
