@@ -1,9 +1,12 @@
 tags:
   - Categories
 summary: Get category list
+operationId: getCategories
+description: 'Retrieve a list of all categories.'
+security: []
 responses:
   200:
-    description: Categories retrieved successfully
+    description: Successfully found categories
     content:
       application/json:
         schema:
