@@ -40,6 +40,10 @@ LoginRequest:
 
 LoginResponse:
   type: object
+  required:
+    - status
+    - message
+    - data
   properties:
     status:
       type: integer
@@ -49,13 +53,20 @@ LoginResponse:
       example: Successfully logged in an user!
     data:
       type: object
+      required:
+        - accessToken
       properties:
         accessToken:
           type: string
+          description: JWT access token (expires in 15 minutes)
           example: AYxGE67cK4Ke/zLQ4BQCbPjtlR7OC3GXasuHOUS1
 
 CurrentUserResponse:
   type: object
+  required:
+    - status
+    - message
+    - data
   properties:
     status:
       type: integer
@@ -79,6 +90,7 @@ CurrentUserResponse:
           type: array
           items:
             type: string
+            example: 65e4decdd286b30065d54af9
           example: []
         createdAt:
           type: string
@@ -91,6 +103,10 @@ CurrentUserResponse:
 
 CategoriesResponse:
   type: object
+  required:
+    - status
+    - message
+    - data
   properties:
     status:
       type: integer
@@ -112,6 +128,10 @@ CategoriesResponse:
 
 IngredientsResponse:
   type: object
+  required:
+    - status
+    - message
+    - data
   properties:
     status:
       type: integer
