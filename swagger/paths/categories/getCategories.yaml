@@ -1,6 +1,6 @@
 tags:
   - Categories
-summary: Get category list
+summary: Get categories list
 operationId: getCategories
 description: 'Retrieve a list of all categories.'
 security: []
