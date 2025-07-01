@@ -3,7 +3,7 @@
   "info": {
     "title": "Headliner API",
     "version": "1.0.0",
-    "description": "API for user authentication, data, and recipes",
+    "description": "This API provides a complete solution for managing a recipe-sharing platform. It allows users to browse, search, and filter recipes, as well as register, log in, and manage their profiles and favorite recipes. The API supports both public and private routes with authentication and authorization mechanisms.",
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -12,6 +12,9 @@
   "servers": [
     {
       "url": "https://tasteorama.onrender.com/api"
+    },
+    {
+      "url": "https://tasteorama.onrender.com"
     }
   ],
   "tags": [
@@ -38,6 +41,7 @@
         "tags": [
           "Auth"
         ],
+        "summary": "Register user",
         "operationId": "registerUser",
         "description": "Register a new user with name, email, and password.",
         "security": [],
@@ -87,10 +91,13 @@
           "Auth"
         ],
         "summary": "User login",
+        "operationId": "loginUser",
+        "security": [],
+        "description": "Authenticate user and return access token in response, refreshToken and sessionId as HTTP-only cookies.",
         "requestBody": {
           "required": true,
           "content": {
-            "multipart/form-data": {
+            "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/LoginRequest"
               }
@@ -100,6 +107,15 @@
         "responses": {
           "200": {
             "description": "Successful login",
+            "headers": {
+              "Set-Cookie": {
+                "description": "HTTP-only cookies for refreshToken and sessionId will be set.",
+                "schema": {
+                  "type": "string",
+                  "example": "refreshToken=wQgb97oZjc6E2rjGYP8WZj6cFPwSjZV58tV3QVnA; sessionId=j%3A%22684bd6c9c89150805aea7579%22"
+                }
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -107,6 +123,9 @@
                 }
               }
             }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationErrorResponse"
           },
           "401": {
             "$ref": "#/components/responses/UnauthorizedErrorResponse"
@@ -123,9 +142,19 @@
           "Auth"
         ],
         "summary": "User logout",
+        "operationId": "logoutUser",
+        "description": "Read `refreshToken` and `sessionId` from HTTP-only cookies, validate session, delete it, and clear both cookies",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "responses": {
           "204": {
-            "description": "Successfully logged out"
+            "description": "Successfully logged out (No Content)"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundErrorResponse"
           }
         }
       }
@@ -136,6 +165,8 @@
           "Users"
         ],
         "summary": "Get current user",
+        "operationId": "getCurrentUser",
+        "description": "Retrieve information about current user. Requires authentication.",
         "security": [
           {
             "bearerAuth": []
@@ -143,7 +174,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Current user data",
+            "description": "Successfully found user",
             "content": {
               "application/json": {
                 "schema": {
@@ -163,10 +194,13 @@
         "tags": [
           "Categories"
         ],
-        "summary": "Get category list",
+        "summary": "Get categories list",
+        "operationId": "getCategories",
+        "description": "Retrieve a list of all categories.",
+        "security": [],
         "responses": {
           "200": {
-            "description": "Categories retrieved successfully",
+            "description": "Successfully found categories",
             "content": {
               "application/json": {
                 "schema": {
@@ -174,6 +208,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundErrorResponse"
           },
           "500": {
             "$ref": "#/components/responses/ServerErrorResponse"
@@ -187,9 +224,12 @@
           "Ingredients"
         ],
         "summary": "Get ingredient list",
+        "operationId": "getIngredients",
+        "description": "Retrieve a list of ingredient",
+        "security": [],
         "responses": {
           "200": {
-            "description": "Ingredients retrieved successfully",
+            "description": "Successfully found ingredients",
             "content": {
               "application/json": {
                 "schema": {
@@ -197,6 +237,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundErrorResponse"
           },
           "500": {
             "$ref": "#/components/responses/ServerErrorResponse"
@@ -223,16 +266,24 @@
           "email": {
             "type": "string",
             "format": "email",
-            "example": "serhii@example.com"
+            "example": "serhii@example.com",
+            "description": "User's email address"
           },
           "password": {
             "type": "string",
-            "example": "Qwerty123!"
+            "example": "Qwerty123!",
+            "minLength": 8,
+            "description": "User's password"
           }
         }
       },
       "LoginResponse": {
         "type": "object",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
         "properties": {
           "status": {
             "type": "integer",
@@ -244,9 +295,13 @@
           },
           "data": {
             "type": "object",
+            "required": [
+              "accessToken"
+            ],
             "properties": {
               "accessToken": {
                 "type": "string",
+                "description": "JWT access token (expires in 15 minutes)",
                 "example": "AYxGE67cK4Ke/zLQ4BQCbPjtlR7OC3GXasuHOUS1"
               }
             }
@@ -302,8 +357,7 @@
         "required": [
           "name",
           "email",
-          "password",
-          "confirmPassword"
+          "password"
         ],
         "properties": {
           "name": {
@@ -320,15 +374,9 @@
           "password": {
             "type": "string",
             "format": "password",
-            "minLength": 6,
+            "minLength": 8,
             "example": "password123",
             "description": "User's password"
-          },
-          "confirmPassword": {
-            "type": "string",
-            "format": "password",
-            "example": "password123",
-            "description": "Confirmation of the password"
           }
         }
       },
@@ -473,6 +521,11 @@
       },
       "CurrentUserResponse": {
         "type": "object",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
         "properties": {
           "status": {
             "type": "integer",
@@ -500,7 +553,8 @@
               "favorites": {
                 "type": "array",
                 "items": {
-                  "type": "string"
+                  "type": "string",
+                  "example": "65e4decdd286b30065d54af9"
                 },
                 "example": []
               },
@@ -520,6 +574,11 @@
       },
       "CategoriesResponse": {
         "type": "object",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
         "properties": {
           "status": {
             "type": "integer",
@@ -549,6 +608,11 @@
       },
       "IngredientsResponse": {
         "type": "object",
+        "required": [
+          "status",
+          "message",
+          "data"
+        ],
         "properties": {
           "status": {
             "type": "integer",

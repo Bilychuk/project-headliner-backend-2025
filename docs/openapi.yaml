@@ -9,8 +9,8 @@ info:
 
 servers:
   - url: https://tasteorama.onrender.com/api
-  - url: https://tasteorama.onrender.com/
-  
+  - url: https://tasteorama.onrender.com
+
 tags:
   - name: Auth
     description: User authentication

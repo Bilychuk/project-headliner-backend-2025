@@ -9,6 +9,5 @@ security:
 responses:
   204:
     description: Successfully logged out (No Content)
-
-
-
+  404:
+    $ref: '../../components/responses/NotFoundErrorResponse.yaml'

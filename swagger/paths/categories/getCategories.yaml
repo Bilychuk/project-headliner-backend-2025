@@ -11,6 +11,7 @@ responses:
       application/json:
         schema:
           $ref: '../../components/schemas/schemas.yaml#/CategoriesResponse'
-          
+  404:
+    $ref: '../../components/responses/NotFoundErrorResponse.yaml'
   500:
     $ref: '../../components/responses/ServerErrorResponse.yaml'
