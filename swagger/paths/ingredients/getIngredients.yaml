@@ -1,0 +1,15 @@
+tags:
+  - Ingredients
+summary: Get ingredient list
+operationId: getIngredients
+description: 'Retrieve a list of ingredient'
+security: []
+responses:
+  200:
+    description: Successfully found ingredients
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/schemas/schemas.yaml#/IngredientsResponse'
+  500:
+    $ref: '../../components/responses/ServerErrorResponse.yaml'

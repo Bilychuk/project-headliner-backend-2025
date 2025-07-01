@@ -1,0 +1,292 @@
+RegisterRequest:
+  type: object
+  required:
+    - name
+    - email
+    - password
+  properties:
+    name:
+      type: string
+      example: "Kateryna"
+      description: User's full name
+    email:
+      type: string
+      format: email
+      example: "kateryna@example.com"
+      description: User's email address
+    password:
+      type: string
+      format: password
+      minLength: 8
+      example: "password123"
+      description: User's password
+
+LoginRequest:
+  type: object
+  required:
+    - email
+    - password
+  properties:
+    email:
+      type: string
+      format: email
+      example: serhii@example.com
+      description: User's email address
+    password:
+      type: string
+      example: Qwerty123!
+      minLength: 8
+      description: User's password
+
+LoginResponse:
+  type: object
+  required:
+    - status
+    - message
+    - data
+  properties:
+    status:
+      type: integer
+      example: 200
+    message:
+      type: string
+      example: Successfully logged in an user!
+    data:
+      type: object
+      required:
+        - accessToken
+      properties:
+        accessToken:
+          type: string
+          description: JWT access token (expires in 15 minutes)
+          example: AYxGE67cK4Ke/zLQ4BQCbPjtlR7OC3GXasuHOUS1
+
+CurrentUserResponse:
+  type: object
+  required:
+    - status
+    - message
+    - data
+  properties:
+    status:
+      type: integer
+      example: 200
+    message:
+      type: string
+      example: Successfully found user
+    data:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 68625286ccc2346b9b5c58a1
+        name:
+          type: string
+          example: test11
+        email:
+          type: string
+          example: test11@example.com
+        favorites:
+          type: array
+          items:
+            type: string
+            example: 65e4decdd286b30065d54af9
+          example: []
+        createdAt:
+          type: string
+          format: date-time
+          example: 2025-06-30T09:01:58.006Z
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2025-06-30T09:01:58.006Z
+
+CategoriesResponse:
+  type: object
+  required:
+    - status
+    - message
+    - data
+  properties:
+    status:
+      type: integer
+      example: 200
+    message:
+      type: string
+      example: Successfully found categories
+    data:
+      type: array
+      items:
+        type: object
+        properties:
+          _id:
+            type: string
+            example: 6462a6cd4c3d0ddd28897f8a
+          name:
+            type: string
+            example: Seafood
+
+IngredientsResponse:
+  type: object
+  required:
+    - status
+    - message
+    - data
+  properties:
+    status:
+      type: integer
+      example: 200
+    message:
+      type: string
+      example: Successfully found ingredients
+    data:
+      type: array
+      items:
+        type: object
+        properties:
+          _id:
+            type: string
+            example: 665c61ff89123b001c5c5678
+          name:
+            type: string
+            example: Egg
+          desc:
+            type: string
+            example: A chicken egg
+          img:
+            type: string
+            format: uri
+            example: http://example.com/egg.jpg
+
+UnauthorizedErrorResponse:
+  type: object
+  properties:
+    status:
+      type: integer
+      example: 401
+    message:
+      type: string
+      example: UnauthorizedError
+    data:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Unauthorized
+
+NotFoundErrorResponse:
+  type: object
+  properties:
+    status:
+      type: integer
+      example: 404
+    message:
+      type: string
+      example: NotFoundError
+    data:
+      type: object
+      properties:
+        message:
+          type: string
+          example: User not found
+
+RegisterSuccessResponse:
+  type: object
+  properties:
+    status:
+      type: integer
+      example: 201
+    message:
+      type: string
+      example: Successfully registered a user!
+    data:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 68625286ccc2346b9b5c58a1
+        name:
+          type: string
+          example: test11
+        email:
+          type: string
+          example: test11@example.com
+        favorites:
+          type: array
+          items:
+            type: string
+          example: []
+        createdAt:
+          type: string
+          format: date-time
+          example: 2025-06-30T09:01:58.006Z
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2025-06-30T09:01:58.006Z
+
+ServerErrorResponse:
+  type: object
+  properties:
+    status:
+      type: string
+      example: error
+    message:
+      type: string
+      example: Internal server error
+
+ValidationErrorResponse:
+  type: object
+  properties:
+    status:
+      type: integer
+      example: 400
+    message:
+      type: string
+      example: BadRequestError
+    data:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Bad request
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "\"name\" is not allowed to be empty"
+              path:
+                type: array
+                items:
+                  type: string
+                example: ["name"]
+              type:
+                type: string
+                example: string.empty
+              context:
+                type: object
+                properties:
+                  label:
+                    type: string
+                    example: name
+                  value:
+                    type: string
+                    example: ""
+                  key:
+                    type: string
+                    example: name
+
+ConflictErrorResponse:
+  type: object
+  properties:
+    status:
+      type: integer
+      example: 409
+      description: HTTP status code
+    message:
+      type: string
+      example: "Email in use"
+      description: Error message
