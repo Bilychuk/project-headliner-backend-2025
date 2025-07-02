@@ -11,7 +11,7 @@
   },
   "servers": [
     {
-      "url": "https://tasteorama.onrender.com/api"
+      "url": "https://tasteorama.onrender.com"
     }
   ],
   "tags": [
@@ -35,9 +35,7 @@
   "paths": {
     "/auth/register": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "Register user",
         "operationId": "registerUser",
         "description": "Register a new user with name, email, and password.",
@@ -84,9 +82,7 @@
     },
     "/auth/login": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "User login",
         "operationId": "loginUser",
         "security": [],
@@ -135,9 +131,7 @@
     },
     "/auth/logout": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "User logout",
         "operationId": "logoutUser",
         "description": "Read `refreshToken` and `sessionId` from HTTP-only cookies, validate session, delete it, and clear both cookies",
@@ -158,9 +152,7 @@
     },
     "/users/current": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Get current user",
         "operationId": "getCurrentUser",
         "description": "Retrieve information about current user. Requires authentication.",
@@ -188,9 +180,7 @@
     },
     "/categories": {
       "get": {
-        "tags": [
-          "Categories"
-        ],
+        "tags": ["Categories"],
         "summary": "Get categories list",
         "operationId": "getCategories",
         "description": "Retrieve a list of all categories.",
@@ -217,9 +207,7 @@
     },
     "/ingredients": {
       "get": {
-        "tags": [
-          "Ingredients"
-        ],
+        "tags": ["Ingredients"],
         "summary": "Get ingredient list",
         "operationId": "getIngredients",
         "description": "Retrieve a list of ingredient",
@@ -255,10 +243,7 @@
     "schemas": {
       "LoginRequest": {
         "type": "object",
-        "required": [
-          "email",
-          "password"
-        ],
+        "required": ["email", "password"],
         "properties": {
           "email": {
             "type": "string",
@@ -276,11 +261,7 @@
       },
       "LoginResponse": {
         "type": "object",
-        "required": [
-          "status",
-          "message",
-          "data"
-        ],
+        "required": ["status", "message", "data"],
         "properties": {
           "status": {
             "type": "integer",
@@ -292,9 +273,7 @@
           },
           "data": {
             "type": "object",
-            "required": [
-              "accessToken"
-            ],
+            "required": ["accessToken"],
             "properties": {
               "accessToken": {
                 "type": "string",
@@ -351,11 +330,7 @@
       },
       "RegisterRequest": {
         "type": "object",
-        "required": [
-          "name",
-          "email",
-          "password"
-        ],
+        "required": ["name", "email", "password"],
         "properties": {
           "name": {
             "type": "string",
@@ -456,9 +431,7 @@
                       "items": {
                         "type": "string"
                       },
-                      "example": [
-                        "name"
-                      ]
+                      "example": ["name"]
                     },
                     "type": {
                       "type": "string",
@@ -518,11 +491,7 @@
       },
       "CurrentUserResponse": {
         "type": "object",
-        "required": [
-          "status",
-          "message",
-          "data"
-        ],
+        "required": ["status", "message", "data"],
         "properties": {
           "status": {
             "type": "integer",
@@ -571,11 +540,7 @@
       },
       "CategoriesResponse": {
         "type": "object",
-        "required": [
-          "status",
-          "message",
-          "data"
-        ],
+        "required": ["status", "message", "data"],
         "properties": {
           "status": {
             "type": "integer",
@@ -605,11 +570,7 @@
       },
       "IngredientsResponse": {
         "type": "object",
-        "required": [
-          "status",
-          "message",
-          "data"
-        ],
+        "required": ["status", "message", "data"],
         "properties": {
           "status": {
             "type": "integer",
