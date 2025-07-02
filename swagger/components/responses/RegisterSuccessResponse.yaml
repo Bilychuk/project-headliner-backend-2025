@@ -1,0 +1,6 @@
+description: Successful registration
+content:
+  application/json:
+    schema:
+      $ref: "../schemas/schemas.yaml#/RegisterSuccessResponse"
+
