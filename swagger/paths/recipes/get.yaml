@@ -1,0 +1,18 @@
+tags:
+  - Recipes
+summary: Get list of recipes
+operationId: getRecipes
+description: 'Get list of recipes with this endpoint'
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: page
+    schema:
+      type: integer
+      example: 1
+  - in: query
+    name: perPage
+    schema:
+      type: integer
+      example: 10

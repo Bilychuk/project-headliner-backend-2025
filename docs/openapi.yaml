@@ -11,8 +11,11 @@ tags:
     description: Endpoints related to recipes.
 servers:
   - url: http://localhost:5000
-  - url: https://example.com/api/v1
+  # - url: https://example.com/api/v1
 paths:
+  /recipes:
+    get:
+      $ref: '../swagger/paths/recipes/get.yaml'
   /recipes/{id}:
     get:
       $ref: ../swagger/paths/recipes/{id}/get.yaml
