@@ -17,6 +17,7 @@ const router = express.Router();
 router.get('/own', authenticate, ctrlWrapper(getOwnRecipesController));
 router.post(
   '/',
+  authenticate, 
   upload.single('thumb'),
   validateBody(createRecipeSchema),
   ctrlWrapper(createRecipeController),
