@@ -96,6 +96,8 @@ export const delFavoriteRecipesController = async (req, res) => {
   const { recipeId } = req.params;
 
   await delFavoriteRecipes(userId, recipeId);
+
+  res.status(204).end();
 };
 
 // ==/==/==/==/==/==/==/==/==/==/==/==/==

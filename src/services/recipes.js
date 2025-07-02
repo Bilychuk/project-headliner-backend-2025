@@ -39,10 +39,6 @@ export const getRecipeById = async (recipeId) => {
 export const addFavoriteRecipes = async (userId, recipeId) => {
   const user = await UsersCollection.findById(userId);
 
-  if (!user) {
-    throw new Error('User not found');
-  }
-
   const check = user.favorites.includes(recipeId);
   if (check) {
     throw new Error('Recipe is already in favorites');
@@ -54,10 +50,6 @@ export const addFavoriteRecipes = async (userId, recipeId) => {
 
 export const delFavoriteRecipes = async (userId, recipeId) => {
   const user = await UsersCollection.findById(userId);
-
-  if (!user) {
-    throw new Error('User not found');
-  }
 
   user.favorites = user.favorites.filter((id) => id.toString() !== recipeId);
 
