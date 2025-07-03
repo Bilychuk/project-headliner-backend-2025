@@ -1,6 +1,13 @@
-import { getAllRecipes, getRecipeById, createRecipe,
-  getOwnRecipes, } from '../services/recipes.js';
+import {
+  getAllRecipes,
+  getRecipeById,
+  createRecipe,
+  getOwnRecipes,
+  addFavoriteRecipes,
+  delFavoriteRecipes,
+} from '../services/recipes.js';
 import createHttpError from 'http-errors';
+
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseFilterParams } from '../utils/parseFilterParams.js';
 import { saveFileToUploadDir } from '../utils/saveFileToUploadDir.js';
@@ -68,6 +75,29 @@ export const getRecipeByIdController = async (req, res, next) => {
     message: `Successfully found recipe with id ${recipeId}!`,
     data: recipe,
   });
+};
+
+// ==/==/==/==/==/==/==/==/==/==/==/==/==
+
+export const addFavoriteRecipesController = async (req, res) => {
+  const userId = req.user.id;
+  const { recipeId } = req.params;
+
+  await addFavoriteRecipes(userId, recipeId);
+
+  res.json({
+    status: 200,
+    message: 'Recipe added to favorites',
+  });
+};
+
+export const delFavoriteRecipesController = async (req, res) => {
+  const userId = req.user.id;
+  const { recipeId } = req.params;
+
+  await delFavoriteRecipes(userId, recipeId);
+
+  res.status(204).end();
 };
 
 // ==/==/==/==/==/==/==/==/==/==/==/==/==
