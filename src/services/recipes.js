@@ -54,6 +54,10 @@ export const addFavoriteRecipes = async (userId, recipeId) => {
 export const delFavoriteRecipes = async (userId, recipeId) => {
   const user = await UsersCollection.findById(userId).populate('favorites');
 
+  if (!user) {
+    throw createHttpError(404, 'User not found');
+  }
+
   user.favorites = user.favorites.filter((id) => id.toString() !== recipeId);
   await user.save();
 

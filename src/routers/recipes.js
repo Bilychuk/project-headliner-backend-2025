@@ -33,13 +33,13 @@ router.get('/', ctrlWrapper(getAllRecipesController));
 router.get('/:recipeId', isValidId, ctrlWrapper(getRecipeByIdController));
 
 router.post(
-  '/:recipeId',
+  '/favorites/:recipeId',
   authenticate,
   ctrlWrapper(addFavoriteRecipesController),
 );
 
 router.delete(
-  '/:recipeId',
+  '/favorites/:recipeId',
   authenticate,
   ctrlWrapper(delFavoriteRecipesController),
 );
