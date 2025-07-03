@@ -35,9 +35,9 @@ export const getRecipeById = async (recipeId) => {
   return recipe;
 };
 
-//======================================================
+//===================================
 export const addFavoriteRecipes = async (userId, recipeId) => {
-  const user = await UsersCollection.findById(userId);
+  const user = await UsersCollection.findById(userId).populate('favorites');
 
   const check = user.favorites.includes(recipeId);
   if (check) {
@@ -46,17 +46,19 @@ export const addFavoriteRecipes = async (userId, recipeId) => {
 
   user.favorites.push(recipeId);
   await user.save();
+
+  return user;
 };
 
 export const delFavoriteRecipes = async (userId, recipeId) => {
-  const user = await UsersCollection.findById(userId);
-
   user.favorites = user.favorites.filter((id) => id.toString() !== recipeId);
 
   await user.save();
-};
 
-// =======
+  const user = await UsersCollection.findById(userId).populate('favorites');
+
+  return user;
+};
 
 export const getAllRecipes = async ({ page, perPage, filter = {} }) => {
   const limit = perPage;
