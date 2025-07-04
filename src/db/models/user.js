@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose';
+import { model, Schema, mongoose } from 'mongoose';
 import { EMAIL_PATTERN } from '../../constants/index.js';
 
 const userSchema = new Schema(
@@ -19,7 +19,7 @@ const userSchema = new Schema(
     },
     favorites: [
       {
-        type: Schema.Types.ObjectId,
+        type:  mongoose.Schema.Types.ObjectId,
         ref: 'recipe',
       },
     ],
