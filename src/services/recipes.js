@@ -58,7 +58,9 @@ export const delFavoriteRecipes = async (userId, recipeId) => {
     throw createHttpError(404, 'User not found');
   }
 
-  user.favorites = user.favorites.filter((id) => id.toString() !== recipeId);
+  user.favorites = user.favorites
+    .map((recipe) => recipe._id)
+    .filter((id) => id.toString() !== recipeId);
   await user.save();
 
   return user;

@@ -2,8 +2,9 @@ import createHttpError from 'http-errors';
 import bcrypt from 'bcrypt';
 import { randomBytes } from 'crypto';
 import { FIFTEEN_MINUTES, THIRTY_DAYS } from '../constants/index.js';
-import UsersCollection from '../db/models/user.js';
-import Session from '../db/models/session.js';
+
+import { Session } from '../db/models/session.js';
+import { UsersCollection } from '../db/models/user.js';
 
 export const registerUser = async (payload) => {
   const existingUser = await UsersCollection.findOne({ email: payload.email });
@@ -45,7 +46,6 @@ export const loginUser = async (payload) => {
   });
 };
 
-
 export const logoutUser = async ({ sessionId, refreshToken }) => {
-    await Session.deleteOne({ _id: sessionId, refreshToken });
-  };
+  await Session.deleteOne({ _id: sessionId, refreshToken });
+};

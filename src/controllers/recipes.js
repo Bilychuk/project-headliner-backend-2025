@@ -87,7 +87,7 @@ export const addFavoriteRecipesController = async (req, res) => {
 
   res.json({
     status: 200,
-    message: 'Recipe added to favorites',
+    message: 'Recipe successfully added to favorites',
   });
 };
 
