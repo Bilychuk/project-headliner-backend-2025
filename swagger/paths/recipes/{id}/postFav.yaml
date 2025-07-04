@@ -27,3 +27,18 @@ responses:
             message:
               type: string
               example: Recipe added to favorites
+  '400':
+    description: Recipe is already in favorites
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            status:
+              type: integer
+              example: 400
+            message:
+              type: string
+              example: Recipe is already in favorites
+  '500':
+    $ref: '../../../components/responses/ServerErrorResponse.yaml'

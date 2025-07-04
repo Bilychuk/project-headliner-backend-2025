@@ -1,6 +1,8 @@
 import { IngredientCollection } from '../db/models/ingredient.js';
 import { RecipesCollection } from '../db/models/recipe.js';
+import { UsersCollection } from '../db/models/user.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
+import createHttpError from 'http-errors';
 
 export async function getOwnRecipes({ page = 1, perPage = 12, owner }) {
   const skip = page > 0 ? (page - 1) * perPage : 0;
@@ -24,6 +26,7 @@ export const createRecipe = async (payload) => {
   const recipe = await RecipesCollection.create(payload);
   return recipe;
 };
+// =====================
 
 export const getRecipeById = async (recipeId) => {
   const recipe = await RecipesCollection.findOne({ _id: recipeId }).populate(
@@ -31,6 +34,34 @@ export const getRecipeById = async (recipeId) => {
     'name',
   );
   return recipe;
+};
+
+//===================================
+export const addFavoriteRecipes = async (userId, recipeId) => {
+  const user = await UsersCollection.findById(userId).populate('favorites');
+
+  const check = user.favorites.some((fav) => fav._id.toString() === recipeId);
+  if (check) {
+    throw createHttpError(400, 'Recipe is already in favorites');
+  }
+
+  user.favorites.push(recipeId);
+  await user.save();
+
+  return user;
+};
+
+export const delFavoriteRecipes = async (userId, recipeId) => {
+  const user = await UsersCollection.findById(userId).populate('favorites');
+
+  if (!user) {
+    throw createHttpError(404, 'User not found');
+  }
+
+  user.favorites = user.favorites.filter((id) => id.toString() !== recipeId);
+  await user.save();
+
+  return user;
 };
 
 export const getAllRecipes = async ({ page, perPage, filter = {} }) => {

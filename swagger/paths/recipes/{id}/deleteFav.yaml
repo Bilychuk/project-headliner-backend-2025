@@ -15,3 +15,7 @@ parameters:
 responses:
   '204':
     description: Recipe successfully removed from favorites
+  '404':
+    $ref: ../../../components/responses/NotFoundErrorResponse.yaml
+  '500':
+    $ref: '../../../components/responses/ServerErrorResponse.yaml'
