@@ -19,6 +19,8 @@ tags:
     description: Recipe categories
   - name: Ingredients
     description: Recipe ingredients
+  - name: Recipes
+    description: Recipe information
 
 paths:
   /auth/register:
@@ -39,13 +41,15 @@ paths:
   /ingredients:
     get:
       $ref: '../swagger/paths/ingredients/getIngredients.yaml'
+  /recipes/{recipeId}:
+    get:
+      $ref: '../swagger/paths/recipes/{id}/getById.yaml'
 
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
-
   schemas:
     LoginRequest:
       $ref: '../swagger/components/schemas/schemas.yaml#/LoginRequest'
