@@ -41,6 +41,9 @@ paths:
   /ingredients:
     get:
       $ref: '../swagger/paths/ingredients/getIngredients.yaml'
+  /recipes:
+    post:
+      $ref: '../swagger/paths/recipes/postCreat.yaml'
   /recipes/{recipeId}:
     get:
       $ref: '../swagger/paths/recipes/{id}/getById.yaml'
