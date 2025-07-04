@@ -391,3 +391,43 @@ RecipesResponsesCreat:
     data:
       type: object
       $ref: '../schemas/schemas.yaml#/Recipes'
+
+RecipesResponsesAll:
+  type: object
+  required:
+    - data
+    - page
+    - perPage
+    - totalItems
+    - totalPages
+    - hasNextPage
+    - hasPreviousPage
+  properties:
+    status:
+      type: integer
+      example: 200
+    message:
+      type: string
+      example: Successfully found recipes!
+    data:
+      type: array
+      items:
+        $ref: '../schemas/schemas.yaml#/Recipes'
+    page:
+      type: number
+      example: 1
+    perPage:
+      type: number
+      example: 10
+    totalItems:
+      type: number
+      example: 100
+    totalPages:
+      type: number
+      example: 10
+    hasNextPage:
+      type: boolean
+      example: false
+    hasPreviousPage:
+      type: boolean
+      example: true
