@@ -8,24 +8,30 @@ RegisterRequest:
   properties:
     name:
       type: string
+      minLength: 2
+      maxLength: 100
       example: "Kateryna"
-      description: User's full name
+      description: User's full name (2–100 characters)
     email:
       type: string
       format: email
       example: "kateryna@example.com"
-      description: User's email address
+      description: Valid email address
     password:
       type: string
       format: password
-      minLength: 6
-      example: "password123"
-      description: User's password
+      minLength: 8
+      maxLength: 128
+      example: "Password123!"
+      description: Password (8–128 characters; must include uppercase, lowercase, number, special character)
     confirmPassword:
       type: string
       format: password
-      example: "password123"
-      description: Confirmation of the password
+      minLength: 8
+      maxLength: 128
+      example: "Password123!"
+      description: Must match the password field
+
 
 
 LoginRequest:
@@ -38,9 +44,13 @@ LoginRequest:
       type: string
       format: email
       example: serhii@example.com
+      description: Valid email address
     password:
       type: string
+      minLength: 8
+      maxLength: 128
       example: Qwerty123!
+      description: Password (8–128 characters)
 
 LoginResponse:
   type: object
