@@ -1,11 +1,13 @@
 tags:
   - Users
 summary: Get current user
+operationId: getCurrentUser
+description: 'Retrieve information about current user. Requires authentication.'
 security:
   - bearerAuth: []
 responses:
   200:
-    description: Current user data
+    description: Successfully found user
     content:
       application/json:
         schema:

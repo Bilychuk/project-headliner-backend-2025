@@ -1,5 +1,6 @@
   tags:
     - Auth
+  summary: Register user
   operationId: registerUser
   description: Register a new user with name, email, and password.
   security: []

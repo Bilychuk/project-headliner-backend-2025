@@ -26,7 +26,7 @@ export const setupServer = () => {
     }),
   );
 
-  app.use('/uploads', express.static(UPLOAD_DIR));
+  app.use('/api/uploads', express.static(UPLOAD_DIR));
   app.use('/api-docs', swaggerDocs());
   app.use('/api', router);
 

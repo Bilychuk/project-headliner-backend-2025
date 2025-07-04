@@ -1,12 +1,16 @@
 tags:
   - Recipes
 summary: Get recipe by ID
+operationId: getRecipe
+description: 'Retrieve a specific recipe by its unique ID.'
+security: []
 parameters:
   - in: path
     name: recipeId
     required: true
     schema:
       type: string
+      example: '65ca67e7ae7f10c88b598384'
     description: Unique recipe identifier
 responses:
   200:
@@ -15,19 +19,23 @@ responses:
       application/json:
         schema:
           type: object
+          required:
+            - status
+            - message
+            - data
           properties:
             status:
               type: integer
               example: 200
             message:
               type: string
-              example: Successfully found recipe with id 12345!
+              example: Successfully found recipe with id 6462a8f74c3d0ddd28897fcd!
             data:
               type: object
               properties:
                 _id:
                   type: string
-                  example: "12345"
+                  example: "6462a8f74c3d0ddd28897fcd"
                 title:
                   type: string
                   example: Borscht
