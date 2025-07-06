@@ -19,6 +19,9 @@ const recipesSchema = new Schema(
     area: {
       type: String,
     },
+    calories: {
+      type:Number,
+    },
     instructions: {
       type: String,
       required: true,
