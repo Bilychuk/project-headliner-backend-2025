@@ -133,3 +133,32 @@ export const getAllRecipes = async ({ page, perPage, filter = {} }) => {
     ...paginationData,
   };
 };
+
+export const getFavoriteRecipes = async ({
+  page = 1,
+  perPage = 12,
+  userId,
+}) => {
+  const user = await UsersCollection.findById(userId)
+    .populate('favorites')
+    .exec();
+
+  if (!user) {
+    throw new createHttpError(404, 'User not found');
+  }
+
+  const allFavs = user.favorites;
+  const totalItems = allFavs.length;
+
+  const skip = page > 0 ? (page - 1) * perPage : 0;
+  const paged = allFavs.slice(skip, skip + perPage);
+  const totalPages = Math.ceil(totalItems / perPage);
+
+  return {
+    data: paged,
+    totalItems,
+    totalPages,
+    hasNextPage: page < totalPages,
+    hasPreviousPage: page > 1,
+  };
+};
