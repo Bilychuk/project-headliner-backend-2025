@@ -127,7 +127,7 @@ export const getAllRecipes = async ({ page, perPage, filter = {} }) => {
     return recipeObj;
   });
 
-  const paginationData = calculatePaginationData(recipesCount, perPage, page);
+  const paginationData = calculatePaginationData(recipesCount, page, perPage);
   return {
     data: transformedRecipes,
     ...paginationData,
