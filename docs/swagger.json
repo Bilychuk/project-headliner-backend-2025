@@ -275,7 +275,7 @@
           "201": {
             "description": "Successfully created a recipe",
             "content": {
-              "application/json": {
+              "multipart/form-data": {
                 "schema": {
                   "$ref": "#/components/schemas/RecipesResponsesCreat"
                 }
