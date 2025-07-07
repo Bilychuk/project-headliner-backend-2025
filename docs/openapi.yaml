@@ -19,6 +19,8 @@ tags:
     description: Recipe categories
   - name: Ingredients
     description: Recipe ingredients
+  - name: Recipes
+    description: Recipe information
 
 paths:
   /auth/register:
@@ -39,13 +41,31 @@ paths:
   /ingredients:
     get:
       $ref: '../swagger/paths/ingredients/getIngredients.yaml'
+  /recipes:
+    post:
+      $ref: '../swagger/paths/recipes/postCreat.yaml'
+    get:
+      $ref: '../swagger/paths/recipes/getAll.yaml'
+  /recipes/{recipeId}:
+    get:
+      $ref: '../swagger/paths/recipes/{id}/getById.yaml'
+  /recipes/own:
+    get:
+      $ref: ../swagger/paths/recipes/getOwn.yaml
+  /recipes/favorites/{recipeId}:
+    post:
+      $ref: '../swagger/paths/recipes/{id}/postFav.yaml'
+    delete:
+      $ref: '../swagger/paths/recipes/{id}/deleteFav.yaml'
+  /recipes/favorites:
+    get:
+      $ref: '../swagger/paths/recipes/{id}/getFav.yaml'
 
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
-
   schemas:
     LoginRequest:
       $ref: '../swagger/components/schemas/schemas.yaml#/LoginRequest'
