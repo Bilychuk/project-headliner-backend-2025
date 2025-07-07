@@ -1,7 +1,7 @@
 tags:
   - Recipes
 summary: Get all favorite recipes
-operationId: getRecipes
+operationId: getFavoriteRecipes
 description: 'Gets the list of favorite recipes of the current user'
 security:
   - bearerAuth: []
@@ -22,9 +22,9 @@ responses:
     content:
       application/json:
         schema:
-          $ref: '../../components/schemas/schemas.yaml#/RecipesResponsesAll'
+          $ref: '../../../components/schemas/schemas.yaml#/components/schemas/RecipesResponsesAll'
   '401':
-    $ref: ../../../components/responses/UnauthorizedErrorResponse.yaml
+    $ref: '../../../components/responses/UnauthorizedErrorResponse.yaml'
   '404':
     $ref: ../../../components/responses/NotFoundErrorResponse.yaml
   '500':

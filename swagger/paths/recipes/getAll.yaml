@@ -28,7 +28,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: '../../components/schemas/schemas.yaml#/Recipes'
+          $ref: '../../components/schemas/schemas.yaml#/components/schemas/Recipes'
   '401':
     $ref: ../../components/responses/UnauthorizedErrorResponse.yaml
   '500':

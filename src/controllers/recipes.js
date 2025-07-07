@@ -5,6 +5,7 @@ import {
   getOwnRecipes,
   addFavoriteRecipes,
   delFavoriteRecipes,
+  getFavoriteRecipes,
 } from '../services/recipes.js';
 import createHttpError from 'http-errors';
 
@@ -100,6 +101,30 @@ export const delFavoriteRecipesController = async (req, res) => {
   res.status(204).end();
 };
 
+export const getFavoriteRecipesController = async (req, res) => {
+  const { page, perPage } = parsePaginationParams(req.query);
+  const userId = req.user.id;
+
+  const { data, totalItems, totalPages, hasNextPage, hasPreviousPage } =
+    await getFavoriteRecipes({ page, perPage, userId });
+
+  const message =
+    totalItems > 0
+      ? 'Successfully found favorite recipes!'
+      : 'No favorite recipes found.';
+
+  res.status(200).json({
+    status: 200,
+    message,
+    data,
+    totalItems,
+    page,
+    perPage,
+    totalPages,
+    hasNextPage,
+    hasPreviousPage,
+  });
+};
 // ==/==/==/==/==/==/==/==/==/==/==/==/==
 
 export const getAllRecipesController = async (req, res) => {

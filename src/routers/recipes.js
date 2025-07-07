@@ -9,6 +9,7 @@ import {
   getRecipeByIdController,
   addFavoriteRecipesController,
   delFavoriteRecipesController,
+  getFavoriteRecipesController,
 } from '../controllers/recipes.js';
 import { createRecipeSchema } from '../validation/recipes.js';
 // import { getRecipeByIdController } from '../controllers/recipes.js';
@@ -43,4 +44,11 @@ router.delete(
   authenticate,
   ctrlWrapper(delFavoriteRecipesController),
 );
+
+router.get(
+  '/favorites',
+  authenticate,
+  ctrlWrapper(getFavoriteRecipesController),
+);
+
 export default router;

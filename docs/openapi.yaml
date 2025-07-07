@@ -49,6 +49,9 @@ paths:
   /recipes/{recipeId}:
     get:
       $ref: '../swagger/paths/recipes/{id}/getById.yaml'
+  /recipes/own:
+    get:
+      $ref: ../swagger/paths/recipes/getOwn.yaml
   /recipes/favorites/{recipeId}:
     post:
       $ref: '../swagger/paths/recipes/{id}/postFav.yaml'
@@ -72,5 +75,3 @@ components:
       $ref: '../swagger/components/schemas/schemas.yaml#/UnauthorizedErrorResponse'
     NotFoundErrorResponse:
       $ref: '../swagger/components/schemas/schemas.yaml#/NotFoundErrorResponse'
-    Recipes:
-      $ref: '../swagger/components/schemas/schemas.yaml#/Recipes'

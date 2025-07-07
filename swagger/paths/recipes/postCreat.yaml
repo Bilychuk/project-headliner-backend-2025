@@ -10,14 +10,14 @@ requestBody:
   content:
     multipart/form-data:
       schema:
-        $ref: '../../components/schemas/schemas.yaml#/Recipes'
+        $ref: ../../components/schemas/schemas.yaml#/components/schemas/RecipeCreateRequest
 responses:
   '201':
     description: Successfully created a recipe
     content:
       application/json:
         schema:
-          $ref: '../../components/schemas/schemas.yaml#/RecipesResponsesCreat'
+          $ref: '../../components/schemas/schemas.yaml#/components/schemas/RecipesResponsesCreat'
   '400':
     $ref: ../../components/responses/400.yaml
   '401':

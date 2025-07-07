@@ -19,7 +19,7 @@ responses:
     content:
       application/json:
         schema:
-          $ref: ../../../components/schemas/schemas.yaml
+          $ref: '../../../components/schemas/schemas.yaml#/components/schemas/RecipesResponsesAddFavorite'
   '400':
     $ref: ../../../components/responses/400.yaml
   '500':
