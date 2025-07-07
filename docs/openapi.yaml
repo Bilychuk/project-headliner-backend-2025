@@ -54,6 +54,9 @@ paths:
       $ref: '../swagger/paths/recipes/{id}/postFav.yaml'
     delete:
       $ref: '../swagger/paths/recipes/{id}/deleteFav.yaml'
+  /recipes/favorites:
+    get:
+      $ref: '../swagger/paths/recipes/{id}/getFav.yaml'
 
 components:
   securitySchemes:

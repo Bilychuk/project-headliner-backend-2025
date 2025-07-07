@@ -7,37 +7,22 @@ RegisterRequest:
   properties:
     name:
       type: string
-<<<<<<< HEAD
+      minLength: 2
+      maxLength: 100
       example: 'Kateryna'
-      description: User's full name
+      description: User's full name (2-100 characters)
     email:
       type: string
       format: email
       example: 'kateryna@example.com'
-      description: User's email address
-=======
-      minLength: 2
-      maxLength: 100
-      example: "Kateryna"
-      description: User's full name (2–100 characters)
-    email:
-      type: string
-      format: email
-      example: "kateryna@example.com"
       description: Valid email address
->>>>>>> main
     password:
       type: string
       format: password
       minLength: 8
-<<<<<<< HEAD
-      example: 'password123'
-      description: User's password
-=======
       maxLength: 128
-      example: "Password123!"
+      example: 'Password123!'
       description: Password (8–128 characters; must include uppercase, lowercase, number, special character)
->>>>>>> main
 
 LoginRequest:
   type: object
@@ -309,7 +294,7 @@ ConflictErrorResponse:
       type: string
       example: 'Email in use'
       description: Error message
-
+# ============================================
 Recipes:
   type: object
   required:
@@ -345,6 +330,12 @@ Recipes:
       description: 'Country of origin of the recipe'
       type: string
       example: 'Ukraine'
+    calories:
+      description: 'Number of calories in the recipe'
+      type: integer
+      example: 150
+      minimum: 1
+      maximum: 10000
     instructions:
       description: 'Preparation Steps'
       type: string
@@ -358,8 +349,8 @@ Recipes:
     thumb:
       description: 'Recipe photo (JPG/PNG), maxSize: 2MB'
       type: string
+      format: uri
       example: 'https://res.cloudinary.com/dpghvuuyl/image/upload/image.png'
-      maxLength: 2097152
     time:
       description: 'Cooking time'
       type: string
@@ -394,6 +385,16 @@ Recipes:
       type: string
       example: 2025-06-17T13:00:01.774+00:00
 
+RecipesResponsesAddFavorite:
+  type: object
+  properties:
+    status:
+      type: integer
+      example: 200
+    message:
+      type: string
+      example: Recipe added to favorites
+
 RecipesResponsesCreat:
   type: object
   required:
@@ -408,12 +409,13 @@ RecipesResponsesCreat:
       type: string
       example: Successfully created a recipe!
     data:
-      type: object
-      $ref: '../schemas/schemas.yaml#/Recipes'
+      $ref: '../../components/schemas/schemas.yaml#/Recipes'
 
 RecipesResponsesAll:
   type: object
   required:
+    - status
+    - message
     - data
     - page
     - perPage
@@ -433,16 +435,16 @@ RecipesResponsesAll:
       items:
         $ref: '../schemas/schemas.yaml#/Recipes'
     page:
-      type: number
+      type: integer
       example: 1
     perPage:
-      type: number
+      type: integer
       example: 10
     totalItems:
-      type: number
+      type: integer
       example: 100
     totalPages:
-      type: number
+      type: integer
       example: 10
     hasNextPage:
       type: boolean
@@ -450,3 +452,25 @@ RecipesResponsesAll:
     hasPreviousPage:
       type: boolean
       example: true
+
+BadRequest:
+  type: object
+  required:
+    - status
+    - message
+    - data
+  properties:
+    status:
+      type: integer
+      example: 400
+    message:
+      type: string
+      example: BadRequestError
+    data:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          example: 'Bad Request'

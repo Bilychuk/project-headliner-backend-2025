@@ -1,8 +1,8 @@
 tags:
   - Recipes
-summary: Add recipe to user favorites
+summary: Add recipe to favorites
 operationId: addFavoriteRecipe
-description: Adds the specified recipe to the authenticated user's favorites list
+description: Adds the selected recipe to the current user's favorites list
 security:
   - bearerAuth: []
 parameters:
@@ -19,26 +19,8 @@ responses:
     content:
       application/json:
         schema:
-          type: object
-          properties:
-            status:
-              type: integer
-              example: 200
-            message:
-              type: string
-              example: Recipe added to favorites
+          $ref: ../../../components/schemas/schemas.yaml
   '400':
-    description: Recipe is already in favorites
-    content:
-      application/json:
-        schema:
-          type: object
-          properties:
-            status:
-              type: integer
-              example: 400
-            message:
-              type: string
-              example: Recipe is already in favorites
+    $ref: ../../../components/responses/400.yaml
   '500':
     $ref: '../../../components/responses/ServerErrorResponse.yaml'
