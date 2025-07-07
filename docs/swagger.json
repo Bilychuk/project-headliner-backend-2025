@@ -353,7 +353,7 @@
             "maxLength": 128,
             "example": "Password123!",
             "description": "Password (8–128 characters; must include uppercase, lowercase, number, special character)"
-          },
+          }
         }
       },
       "RegisterSuccessResponse": {
