@@ -81,7 +81,7 @@ export const getRecipeByIdController = async (req, res, next) => {
 // ==/==/==/==/==/==/==/==/==/==/==/==/==
 
 export const addFavoriteRecipesController = async (req, res) => {
-  const userId = req.user.id;
+  const userId = req.user._id;
   const { recipeId } = req.params;
 
   await addFavoriteRecipes(userId, recipeId);
@@ -93,7 +93,7 @@ export const addFavoriteRecipesController = async (req, res) => {
 };
 
 export const delFavoriteRecipesController = async (req, res) => {
-  const userId = req.user.id;
+  const userId = req.user._id;
   const { recipeId } = req.params;
 
   await delFavoriteRecipes(userId, recipeId);
@@ -103,7 +103,7 @@ export const delFavoriteRecipesController = async (req, res) => {
 
 export const getFavoriteRecipesController = async (req, res) => {
   const { page, perPage } = parsePaginationParams(req.query);
-  const userId = req.user.id;
+  const userId = req.user._id;
 
   const { data, totalItems, totalPages, hasNextPage, hasPreviousPage } =
     await getFavoriteRecipes({ page, perPage, userId });
