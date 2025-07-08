@@ -32,6 +32,12 @@ router.post(
   ctrlWrapper(createRecipeController),
 );
 router.get('/', ctrlWrapper(getAllRecipesController));
+
+router.get(
+  '/favorites',
+  authenticate,
+  ctrlWrapper(getFavoriteRecipesController),
+);
 router.get('/:recipeId', isValidId, ctrlWrapper(getRecipeByIdController));
 
 router.post(
@@ -44,12 +50,6 @@ router.delete(
   '/favorites/:recipeId',
   authenticate,
   ctrlWrapper(delFavoriteRecipesController),
-);
-
-router.get(
-  '/favorites',
-  authenticate,
-  ctrlWrapper(getFavoriteRecipesController),
 );
 
 router.delete(
