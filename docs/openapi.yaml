@@ -39,6 +39,9 @@ paths:
   /ingredients:
     get:
       $ref: '../swagger/paths/ingredients/getIngredients.yaml'
+  /recipes/{recipeId}:
+    delete:
+      $ref: '../swagger/paths/recipes/deleteRecipe.yaml'
 
 components:
   securitySchemes:

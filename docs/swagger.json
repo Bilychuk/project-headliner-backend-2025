@@ -243,6 +243,95 @@
           }
         }
       }
+    },
+    "/recipes/{recipeId}": {
+      "delete": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Delete own recipe by ID",
+        "description": "Delete a recipe created by the current authenticated user",
+        "operationId": "deleteOwnRecipe",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "recipeId",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the recipe to delete",
+            "schema": {
+              "type": "string",
+              "example": "64f6a226e1b2c4d7f3b8c1d5"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recipe successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteRecipeSuccessResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden (not the owner of the recipe)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "You are not allowed to delete this recipe"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recipe not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -378,7 +467,7 @@
             "maxLength": 128,
             "example": "Password123!",
             "description": "Password (8–128 characters; must include uppercase, lowercase, number, special character)"
-          },
+          }
         }
       },
       "RegisterSuccessResponse": {
@@ -647,6 +736,23 @@
                 }
               }
             }
+          }
+        }
+      },
+      "DeleteRecipeSuccessResponse": {
+        "type": "object",
+        "required": [
+          "status",
+          "message"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 200
+          },
+          "message": {
+            "type": "string",
+            "example": "Recipe with ID 65d65abfa7e45a0012fcd087 has been successfully deleted."
           }
         }
       }

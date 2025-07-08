@@ -19,6 +19,7 @@ import { upload } from '../middlewares/multer.js';
 import { isValidId } from '../middlewares/isValidId.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { authenticate } from '../middlewares/authenticate.js';
+import { deleteOwnRecipeController } from '../controllers/recipes.js';
 
 const router = express.Router();
 
@@ -50,5 +51,13 @@ router.get(
   authenticate,
   ctrlWrapper(getFavoriteRecipesController),
 );
+
+router.delete(
+  '/:recipeId',
+  authenticate,
+  isValidId,
+  ctrlWrapper(deleteOwnRecipeController),
+);
+
 
 export default router;

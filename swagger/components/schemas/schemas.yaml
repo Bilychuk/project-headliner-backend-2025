@@ -161,6 +161,18 @@ IngredientsResponse:
             type: string
             format: uri
             example: http://example.com/egg.jpg
+DeleteRecipeSuccessResponse:
+  type: object
+  required:
+    - status
+    - message
+  properties:
+     status:
+      type: integer
+      example: 200
+     message:
+      type: string
+      example: Recipe with ID 65d65abfa7e45a0012fcd087 has been successfully deleted.
 
 UnauthorizedErrorResponse:
   type: object
