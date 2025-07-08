@@ -352,142 +352,6 @@
         }
       }
     },
-    "/recipes/{recipeId}": {
-      "get": {
-        "tags": [
-          "Recipes"
-        ],
-        "summary": "Get recipe by ID",
-        "operationId": "getRecipe",
-        "description": "Retrieve a specific recipe by its unique ID.",
-        "security": [],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "recipeId",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "example": "65ca67e7ae7f10c88b598384"
-            },
-            "description": "Unique recipe identifier"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Recipe found successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "required": [
-                    "status",
-                    "message",
-                    "data"
-                  ],
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 200
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully found recipe with id 6462a8f74c3d0ddd28897fcd!"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "_id": {
-                          "type": "string",
-                          "example": "6462a8f74c3d0ddd28897fcd"
-                        },
-                        "title": {
-                          "type": "string",
-                          "example": "Borscht"
-                        },
-                        "category": {
-                          "type": "string",
-                          "example": "Soups"
-                        },
-                        "owner": {
-                          "type": "string",
-                          "example": "userId"
-                        },
-                        "area": {
-                          "type": "string",
-                          "example": "Ukrainian cuisine"
-                        },
-                        "instructions": {
-                          "type": "string",
-                          "example": "Boil, add..."
-                        },
-                        "description": {
-                          "type": "string",
-                          "example": "Traditional Ukrainian borscht"
-                        },
-                        "thumb": {
-                          "type": "string",
-                          "example": "http://example.com/image.jpg"
-                        },
-                        "time": {
-                          "type": "string",
-                          "example": "60 min"
-                        },
-                        "ingredients": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "id": {
-                                "type": "object",
-                                "properties": {
-                                  "_id": {
-                                    "type": "string",
-                                    "example": "ingredientId"
-                                  },
-                                  "name": {
-                                    "type": "string",
-                                    "example": "Beetroot"
-                                  }
-                                }
-                              },
-                              "measure": {
-                                "type": "string",
-                                "example": "200 g"
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Recipe not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "status": {
-                      "type": "integer",
-                      "example": 404
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Recipe not found"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/recipes/own": {
       "get": {
         "tags": [
@@ -679,6 +543,229 @@
           },
           "500": {
             "$ref": "#/components/responses/ServerErrorResponse"
+          }
+        }
+      }
+    },
+    "/recipes/{recipeId}": {
+      "get": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Get recipe by ID",
+        "operationId": "getRecipe",
+        "description": "Retrieve a specific recipe by its unique ID.",
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "recipeId",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            },
+            "description": "Unique recipe identifier"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recipe found successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found recipe with id 6462a8f74c3d0ddd28897fcd!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "6462a8f74c3d0ddd28897fcd"
+                        },
+                        "title": {
+                          "type": "string",
+                          "example": "Borscht"
+                        },
+                        "category": {
+                          "type": "string",
+                          "example": "Soups"
+                        },
+                        "owner": {
+                          "type": "string",
+                          "example": "userId"
+                        },
+                        "area": {
+                          "type": "string",
+                          "example": "Ukrainian cuisine"
+                        },
+                        "instructions": {
+                          "type": "string",
+                          "example": "Boil, add..."
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "Traditional Ukrainian borscht"
+                        },
+                        "thumb": {
+                          "type": "string",
+                          "example": "http://example.com/image.jpg"
+                        },
+                        "time": {
+                          "type": "string",
+                          "example": "60 min"
+                        },
+                        "ingredients": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "object",
+                                "properties": {
+                                  "_id": {
+                                    "type": "string",
+                                    "example": "ingredientId"
+                                  },
+                                  "name": {
+                                    "type": "string",
+                                    "example": "Beetroot"
+                                  }
+                                }
+                              },
+                              "measure": {
+                                "type": "string",
+                                "example": "200 g"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recipe not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 404
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Recipe not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Recipes"
+        ],
+        "summary": "Delete own recipe by ID",
+        "description": "Delete a recipe created by the current authenticated user",
+        "operationId": "deleteOwnRecipe",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "recipeId",
+            "in": "path",
+            "required": true,
+            "description": "The ID of the recipe to delete",
+            "schema": {
+              "type": "string",
+              "example": "64f6a226e1b2c4d7f3b8c1d5"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recipe successfully deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteRecipeSuccessResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden (not the owner of the recipe)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 403
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "You are not allowed to delete this recipe"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recipe not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerErrorResponse"
+                }
+              }
+            }
           }
         }
       }
@@ -1411,6 +1498,23 @@
           "message": {
             "type": "string",
             "example": "Recipe added to favorites"
+          }
+        }
+      },
+      "DeleteRecipeSuccessResponse": {
+        "type": "object",
+        "required": [
+          "status",
+          "message"
+        ],
+        "properties": {
+          "status": {
+            "type": "integer",
+            "example": 200
+          },
+          "message": {
+            "type": "string",
+            "example": "Recipe with ID 65d65abfa7e45a0012fcd087 has been successfully deleted."
           }
         }
       }
