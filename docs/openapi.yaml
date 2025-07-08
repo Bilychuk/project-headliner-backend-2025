@@ -46,12 +46,9 @@ paths:
       $ref: '../swagger/paths/recipes/postCreat.yaml'
     get:
       $ref: '../swagger/paths/recipes/getAll.yaml'
-  /recipes/{recipeId}:
-    get:
-      $ref: '../swagger/paths/recipes/{id}/getById.yaml'
   /recipes/own:
     get:
-      $ref: ../swagger/paths/recipes/getOwn.yaml
+      $ref: '../swagger/paths/recipes/getOwn.yaml'
   /recipes/favorites/{recipeId}:
     post:
       $ref: '../swagger/paths/recipes/{id}/postFav.yaml'
@@ -60,6 +57,11 @@ paths:
   /recipes/favorites:
     get:
       $ref: '../swagger/paths/recipes/{id}/getFav.yaml'
+  /recipes/{recipeId}:
+    get:
+      $ref: '../swagger/paths/recipes/{id}/getById.yaml'
+    delete:
+      $ref: '../swagger/paths/recipes/deleteRecipe.yaml'
 
 components:
   securitySchemes:
