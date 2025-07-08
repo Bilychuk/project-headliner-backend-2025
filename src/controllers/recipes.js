@@ -101,13 +101,39 @@ export const delFavoriteRecipesController = async (req, res) => {
   res.status(204).end();
 };
 
+// export const getFavoriteRecipesController = async (req, res) => {
+//   const { page, perPage } = parsePaginationParams(req.query);
+//   const userId = req.user._id;
+
+//   const { data, totalItems, totalPages, hasNextPage, hasPreviousPage } =
+//     await getFavoriteRecipes({
+//       page,
+//       perPage,
+//       userId,
+//     });
+//   const message =
+//     totalItems > 0
+//       ? 'Successfully found favorite recipes!'
+//       : 'No favorite recipes found.';
+
+//   res.status(200).json({
+//     status: 200,
+//     message,
+//     data,
+//     page,
+//     perPage,
+//     totalItems,
+//     totalPages,
+//     hasNextPage,
+//     hasPreviousPage,
+//   });
+// };
 export const getFavoriteRecipesController = async (req, res) => {
   const { page, perPage } = parsePaginationParams(req.query);
   const userId = req.user._id;
 
   const { data, totalItems, totalPages, hasNextPage, hasPreviousPage } =
-    await getFavoriteRecipes({ page, perPage, userId });
-
+    await getFavoriteRecipes(userId);
   const message =
     totalItems > 0
       ? 'Successfully found favorite recipes!'
@@ -117,9 +143,9 @@ export const getFavoriteRecipesController = async (req, res) => {
     status: 200,
     message,
     data,
-    totalItems,
     page,
     perPage,
+    totalItems,
     totalPages,
     hasNextPage,
     hasPreviousPage,
